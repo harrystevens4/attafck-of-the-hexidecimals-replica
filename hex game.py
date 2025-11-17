@@ -11,6 +11,7 @@ class main():
         self.root = tkinter.Tk()
         self.root.bind("<Key>",self.number_keys)
         self.root.title("hex attack")
+        self.movetime = 0.25
         #self.root.configure(background="yellow")
         self.canvas = tkinter.Canvas()
         self.canvas.grid(row=0,column=0,columnspan=8,sticky=tkinter.NSEW)
@@ -65,7 +66,7 @@ class main():
         while True:
             self.canvas.coords(self.hex_indicator,20,self.canvas.winfo_height()-20)
             self.canvas.coords(self.scorecounter,self.canvas.winfo_width()-20,self.canvas.winfo_height()-20)
-            time.sleep(0.25)
+            time.sleep(self.movetime)
             counter += 1
             if counter >= 10:
                 counter = 0
@@ -82,6 +83,7 @@ class main():
                     self.canvas.moveto(self.portal,self.canvas.coords(i)[0]-20,self.canvas.coords(i)[1]) 
                     self.send_buffer = self.canvas.itemcget(i,'text').encode()
                     self.canvas.delete(i)
+                    self.movetime *= 0.95 # Increase speed of falling
                     for i in self.bttns:
                         self.bttns[i]["text"] = "0"
                         self.bttns[i]["bg"] = self.default_colour
@@ -115,3 +117,4 @@ class main():
             self.send_buffer = b"_"            
         
 main()
+
